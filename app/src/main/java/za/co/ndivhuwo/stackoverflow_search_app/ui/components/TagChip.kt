@@ -19,18 +19,18 @@ fun TagChip(tag: String) {
     Box(
         modifier = Modifier
             .background(
-                color = Color(0xFFFF9800), // Orange background
-                shape = RoundedCornerShape(4.dp)
+                color = Color(0xFFE1ECF4), // Stack Overflow light blue tag background
+                shape = RoundedCornerShape(3.dp)
             )
-            .padding(horizontal = 8.dp, vertical = 4.dp),
+            .padding(horizontal = 6.dp, vertical = 4.dp),
         contentAlignment = Alignment.Center
     ) {
         Text(
-            text = tag.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() },
+            text = tag.lowercase(),
             style = MaterialTheme.typography.labelSmall,
-            color = Color.White,
-            fontWeight = FontWeight.Medium,
-            fontSize = 11.sp
+            color = Color(0xFF39739D), // Stack Overflow dark blue tag text
+            fontWeight = FontWeight.Normal,
+            fontSize = 12.sp
         )
     }
 }

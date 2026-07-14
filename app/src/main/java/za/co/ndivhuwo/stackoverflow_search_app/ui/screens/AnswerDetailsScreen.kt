@@ -123,6 +123,8 @@ fun AnswerDetailsContent(
 
         // Answers Header
         item {
+            HorizontalDivider()
+            Spacer(modifier = Modifier.height(16.dp))
             Text(
                 text = "${uiState.answers.size} Answers",
                 style = MaterialTheme.typography.titleLarge,
@@ -193,7 +195,7 @@ fun AnswerItem(answer: Answer) {
             }
             Spacer(modifier = Modifier.height(16.dp))
             Text(
-                text = "Asked ${formatDate(answer.creationDate)}",
+                text = "Answered ${formatDate(answer.creationDate)}",
                 style = MaterialTheme.typography.labelMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )

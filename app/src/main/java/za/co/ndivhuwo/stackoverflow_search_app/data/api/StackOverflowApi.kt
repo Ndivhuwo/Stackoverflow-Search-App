@@ -10,7 +10,7 @@ interface StackOverflowApi {
     @GET("search/advanced")
     suspend fun searchQuestions(
         @Query("title") title: String,
-        @Query("pagesize") pageSize: Int = 3,
+        @Query("pagesize") pageSize: Int = 30,
         @Query("site") site: String = "stackoverflow",
         @Query("order") order: String = "desc",
         @Query("sort") sort: String = "activity",

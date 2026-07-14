@@ -16,7 +16,8 @@ data class SearchUiState(
     val query: String = "",
     val results: List<Question> = emptyList(),
     val isLoading: Boolean = false,
-    val error: String? = null
+    val error: String? = null,
+    val hasSearched: Boolean = false
 )
 
 @HiltViewModel
@@ -35,7 +36,7 @@ class SearchViewModel @Inject constructor(
         val currentQuery = _uiState.value.query
         if (currentQuery.isBlank()) return
 
-        _uiState.update { it.copy(isLoading = true, error = null) }
+        _uiState.update { it.copy(isLoading = true, error = null, hasSearched = true) }
 
         viewModelScope.launch {
             repository.searchQuestions(currentQuery)
@@ -49,6 +50,17 @@ class SearchViewModel @Inject constructor(
                         it.copy(error = error.message ?: "Unknown error", isLoading = false) 
                     }
                 }
+        }
+    }
+
+    fun clearSearch() {
+        _uiState.update { 
+            it.copy(
+                query = "",
+                results = emptyList(),
+                error = null,
+                hasSearched = false
+            )
         }
     }
 }
