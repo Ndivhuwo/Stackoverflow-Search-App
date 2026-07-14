@@ -2,9 +2,11 @@ package za.co.ndivhuwo.stackoverflow_search_app.ui.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -32,6 +34,7 @@ import za.co.ndivhuwo.stackoverflow_search_app.data.models.Owner
 import za.co.ndivhuwo.stackoverflow_search_app.data.models.Question
 import za.co.ndivhuwo.stackoverflow_search_app.ui.components.ErrorView
 import za.co.ndivhuwo.stackoverflow_search_app.ui.components.HtmlText
+import za.co.ndivhuwo.stackoverflow_search_app.ui.components.SimpleHtmlText
 import za.co.ndivhuwo.stackoverflow_search_app.ui.components.TagChip
 import za.co.ndivhuwo.stackoverflow_search_app.viewmodel.AnswerUiState
 import za.co.ndivhuwo.stackoverflow_search_app.viewmodel.AnswerViewModel
@@ -89,8 +92,8 @@ fun AnswerDetailsContent(
         item {
             Column {
 
-                Text(
-                    text = question.title,
+                SimpleHtmlText(
+                    html = question.title,
                     style = MaterialTheme.typography.headlineSmall,
                     color = soBlue,
                     fontWeight = FontWeight.Bold
@@ -109,32 +112,31 @@ fun AnswerDetailsContent(
                 
                 HorizontalDivider(modifier = Modifier.padding(vertical = 16.dp), thickness = 0.5.dp)
 
-                Column(modifier = Modifier.weight(1f)) {
-                    question.body?.let {
-                        HtmlText(
-                            html = it,
-                            style = MaterialTheme.typography.bodyLarge.copy(lineHeight = 24.sp),
-                            modifier = Modifier.fillMaxWidth()
-                        )
-                    }
-
-                    Spacer(modifier = Modifier.height(16.dp))
-
-                    if (question.tags.isNotEmpty()) {
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.spacedBy(6.dp)
-                        ) {
-                            question.tags.forEach { tag ->
-                                TagChip(tag = tag)
-                            }
-                        }
-                        Spacer(modifier = Modifier.height(20.dp))
-                    }
-
-                    OwnerBlock(owner = question.owner, date = question.creationDate, label = "asked")
-
+                question.body?.let {
+                    HtmlText(
+                        html = it,
+                        style = MaterialTheme.typography.bodyLarge.copy(lineHeight = 24.sp),
+                        modifier = Modifier.fillMaxWidth()
+                    )
                 }
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                if (question.tags.isNotEmpty()) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .horizontalScroll(rememberScrollState()),
+                        horizontalArrangement = Arrangement.spacedBy(6.dp)
+                    ) {
+                        question.tags.forEach { tag ->
+                            TagChip(tag = tag)
+                        }
+                    }
+                    Spacer(modifier = Modifier.height(20.dp))
+                }
+
+                OwnerBlock(owner = question.owner, date = question.creationDate, label = "asked")
             }
         }
 

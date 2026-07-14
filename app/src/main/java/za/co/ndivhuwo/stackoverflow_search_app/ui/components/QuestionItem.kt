@@ -93,13 +93,12 @@ fun QuestionItem(
                 Column(
                     modifier = Modifier.weight(1f)
                 ) {
-                    Text(
-                        text = question.title,
+                    SimpleHtmlText(
+                        html = question.title,
                         color = soBlue,
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Normal,
                         maxLines = 2,
-                        overflow = TextOverflow.Ellipsis
                     )
                     
                     Spacer(modifier = Modifier.height(4.dp))
