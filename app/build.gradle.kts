@@ -8,12 +8,12 @@ plugins {
 
 android {
     namespace = "za.co.ndivhuwo.stackoverflow_search_app"
-    compileSdk = 36
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "za.co.ndivhuwo.stackoverflow_search_app"
         minSdk = 24
-        targetSdk = 36
+        targetSdk = 37
         versionCode = 1
         versionName = "1.0"
 
@@ -36,6 +36,10 @@ android {
     // Removed kotlinOptions as it's built-in in AGP 9.0+
     buildFeatures {
         compose = true
+    }
+
+    testOptions {
+        unitTests.isReturnDefaultValues = true
     }
 }
 
@@ -77,6 +81,11 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
 
     testImplementation(libs.junit)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.mockk)
+    testImplementation(libs.turbine)
+    testImplementation(libs.mockwebserver)
+
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     androidTestImplementation(libs.androidx.espresso.core)
