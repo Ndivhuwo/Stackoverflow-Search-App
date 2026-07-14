@@ -30,6 +30,7 @@ import kotlinx.coroutines.launch
 import za.co.ndivhuwo.stackoverflow_search_app.R
 import za.co.ndivhuwo.stackoverflow_search_app.data.models.Owner
 import za.co.ndivhuwo.stackoverflow_search_app.data.models.Question
+import za.co.ndivhuwo.stackoverflow_search_app.ui.components.ErrorView
 import za.co.ndivhuwo.stackoverflow_search_app.ui.components.QuestionItem
 import za.co.ndivhuwo.stackoverflow_search_app.ui.theme.StackoverflowSearchAppTheme
 import za.co.ndivhuwo.stackoverflow_search_app.viewmodel.SearchUiState
@@ -173,11 +174,10 @@ fun HomeScreenContent(
                     CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
                 }
                 uiState.error != null -> {
-                    Text(
-                        text = uiState.error,
-                        color = MaterialTheme.colorScheme.error,
-                        modifier = Modifier.align(Alignment.Center),
-                        textAlign = TextAlign.Center
+                    ErrorView(
+                        message = uiState.error,
+                        onRetry = onSearch,
+                        modifier = Modifier.align(Alignment.Center)
                     )
                 }
                 !uiState.hasSearched -> {

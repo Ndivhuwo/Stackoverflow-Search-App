@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import za.co.ndivhuwo.stackoverflow_search_app.data.models.Answer
 import za.co.ndivhuwo.stackoverflow_search_app.data.repository.StackOverflowRepository
+import za.co.ndivhuwo.stackoverflow_search_app.domain.AppError
 import javax.inject.Inject
 
 data class AnswerUiState(
@@ -34,6 +35,10 @@ class AnswerViewModel @Inject constructor(
         questionId?.let { fetchAnswers(it) }
     }
 
+    fun retry() {
+        questionId?.let { fetchAnswers(it) }
+    }
+
     private fun fetchAnswers(id: Long) {
         _uiState.update { it.copy(isLoading = true, error = null) }
         viewModelScope.launch {
@@ -44,8 +49,13 @@ class AnswerViewModel @Inject constructor(
                     }
                 }
                 .onFailure { error ->
+                    val message = if (error is AppError) {
+                        error.getDisplayMessage()
+                    } else {
+                        error.message ?: "Unknown error"
+                    }
                     _uiState.update { 
-                        it.copy(error = error.message ?: "Unknown error", isLoading = false) 
+                        it.copy(error = message, isLoading = false)
                     }
                 }
         }

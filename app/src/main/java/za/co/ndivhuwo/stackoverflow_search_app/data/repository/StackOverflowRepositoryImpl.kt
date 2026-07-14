@@ -3,6 +3,7 @@ package za.co.ndivhuwo.stackoverflow_search_app.data.repository
 import za.co.ndivhuwo.stackoverflow_search_app.data.api.StackOverflowApi
 import za.co.ndivhuwo.stackoverflow_search_app.data.models.AnswerResponse
 import za.co.ndivhuwo.stackoverflow_search_app.data.models.StackOverflowResponse
+import za.co.ndivhuwo.stackoverflow_search_app.domain.AppError
 import javax.inject.Inject
 
 class StackOverflowRepositoryImpl @Inject constructor(
@@ -13,7 +14,7 @@ class StackOverflowRepositoryImpl @Inject constructor(
             val response = api.searchQuestions(title = query)
             Result.success(response)
         } catch (e: Exception) {
-            Result.failure(e)
+            Result.failure(AppError.fromThrowable(e))
         }
     }
 
@@ -22,7 +23,7 @@ class StackOverflowRepositoryImpl @Inject constructor(
             val response = api.getAnswers(questionIds = questionId.toString())
             Result.success(response)
         } catch (e: Exception) {
-            Result.failure(e)
+            Result.failure(AppError.fromThrowable(e))
         }
     }
 }
