@@ -67,4 +67,36 @@ class StackOverflowApiTest {
         assertEquals("Kotlin Test Question", response.items[0].title)
         assertEquals("Test User", response.items[0].owner.displayName)
     }
+
+    @Test
+    fun `getAnswers returns correct response`() = runTest {
+        val mockJsonResponse = """
+            {
+                "items": [
+                    {
+                        "answer_id": 98765,
+                        "question_id": 12345,
+                        "body": "This is a test answer",
+                        "owner": { "display_name": "Answerer" },
+                        "is_accepted": true,
+                        "score": 5,
+                        "creation_date": 1628604773,
+                        "last_activity_date": 1772824126
+                    }
+                ],
+                "has_more": false,
+                "quota_max": 300,
+                "quota_remaining": 299
+            }
+        """.trimIndent()
+
+        mockWebServer.enqueue(MockResponse().setBody(mockJsonResponse).setResponseCode(200))
+
+        val response = api.getAnswers(questionIds = "12345")
+
+        assertEquals(1, response.items.size)
+        assertEquals(98765L, response.items[0].answerId)
+        assertEquals("This is a test answer", response.items[0].body)
+        assertEquals("Answerer", response.items[0].owner.displayName)
+    }
 }

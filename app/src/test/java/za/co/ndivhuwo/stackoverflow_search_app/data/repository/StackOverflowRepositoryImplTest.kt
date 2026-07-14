@@ -48,4 +48,33 @@ class StackOverflowRepositoryImplTest {
         assertTrue(result.isFailure)
         assertEquals(exception, result.exceptionOrNull())
     }
+
+    @Test
+    fun `when getAnswers is successful, then returns success result`() = runTest {
+        val questionId = 123L
+        val mockResponse = za.co.ndivhuwo.stackoverflow_search_app.data.models.AnswerResponse(
+            items = emptyList(),
+            hasMore = false,
+            quotaMax = 300,
+            quotaRemaining = 299
+        )
+        coEvery { api.getAnswers(questionIds = questionId.toString()) } returns mockResponse
+
+        val result = repository.getAnswers(questionId)
+
+        assertTrue(result.isSuccess)
+        assertEquals(mockResponse, result.getOrNull())
+    }
+
+    @Test
+    fun `when getAnswers throws exception, then returns failure result`() = runTest {
+        val questionId = 123L
+        val exception = RuntimeException("API Error")
+        coEvery { api.getAnswers(questionIds = questionId.toString()) } throws exception
+
+        val result = repository.getAnswers(questionId)
+
+        assertTrue(result.isFailure)
+        assertEquals(exception, result.exceptionOrNull())
+    }
 }
