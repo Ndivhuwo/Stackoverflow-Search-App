@@ -1,6 +1,10 @@
 package za.co.ndivhuwo.stackoverflow_search_app.ui.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.ChevronRight
@@ -41,7 +45,7 @@ fun QuestionItem(
             modifier = Modifier
                 .padding(12.dp)
                 .fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.Top
         ) {
             // 1. Answered Icon
             Box(modifier = Modifier.size(24.dp)) {
@@ -80,13 +84,11 @@ fun QuestionItem(
                 Spacer(modifier = Modifier.height(4.dp))
                 
                 question.body?.let {
-                    Text(
-                        text = it.replace(Regex("<[^>]*>"), ""),
-                        style = MaterialTheme.typography.bodySmall,
+                    HtmlText(
+                        html = it,
                         maxLines = 3,
-                        overflow = TextOverflow.Ellipsis,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        lineHeight = 16.sp
+                        style = MaterialTheme.typography.bodySmall,
+                        modifier = Modifier.fillMaxWidth()
                     )
                 }
 

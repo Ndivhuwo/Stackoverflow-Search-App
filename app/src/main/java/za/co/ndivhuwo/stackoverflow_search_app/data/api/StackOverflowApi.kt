@@ -1,7 +1,9 @@
 package za.co.ndivhuwo.stackoverflow_search_app.data.api
 
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
+import za.co.ndivhuwo.stackoverflow_search_app.data.models.AnswerResponse
 import za.co.ndivhuwo.stackoverflow_search_app.data.models.StackOverflowResponse
 
 interface StackOverflowApi {
@@ -14,6 +16,15 @@ interface StackOverflowApi {
         @Query("sort") sort: String = "activity",
         @Query("filter") filter: String = "withbody"
     ): StackOverflowResponse
+
+    @GET("questions/{ids}/answers")
+    suspend fun getAnswers(
+        @Path("ids") questionIds: String,
+        @Query("site") site: String = "stackoverflow",
+        @Query("order") order: String = "desc",
+        @Query("sort") sort: String = "activity",
+        @Query("filter") filter: String = "withbody"
+    ): AnswerResponse
 
     companion object {
         const val BASE_URL = "https://api.stackexchange.com/2.3/"

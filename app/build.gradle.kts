@@ -81,7 +81,11 @@ dependencies {
     implementation(libs.retrofit.serialization)
     implementation(libs.okhttp)
     implementation(libs.okhttp.logging)
-    
+    implementation(libs.jsoup)
+
+    // Image Loading
+    implementation(libs.coil)
+
     // Coroutines
     implementation(libs.kotlinx.coroutines.android)
     

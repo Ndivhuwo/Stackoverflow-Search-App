@@ -17,7 +17,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import za.co.ndivhuwo.stackoverflow_search_app.data.models.Owner
 import za.co.ndivhuwo.stackoverflow_search_app.data.models.Question
 import za.co.ndivhuwo.stackoverflow_search_app.ui.components.QuestionItem
@@ -28,7 +28,8 @@ import za.co.ndivhuwo.stackoverflow_search_app.viewmodel.SearchViewModel
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
-    viewModel: SearchViewModel = hiltViewModel()
+    viewModel: SearchViewModel = hiltViewModel(),
+    onQuestionClick: (Question) -> Unit = {}
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
@@ -36,6 +37,7 @@ fun HomeScreen(
         uiState = uiState,
         onQueryChanged = viewModel::onQueryChanged,
         onSearch = viewModel::search,
+        onQuestionClick = onQuestionClick,
         modifier = modifier
     )
 }
@@ -45,6 +47,7 @@ fun HomeScreenContent(
     uiState: SearchUiState,
     onQueryChanged: (String) -> Unit,
     onSearch: () -> Unit,
+    onQuestionClick: (Question) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -116,7 +119,10 @@ fun HomeScreenContent(
                         contentPadding = PaddingValues(bottom = 16.dp)
                     ) {
                         items(uiState.results) { question ->
-                            QuestionItem(question = question)
+                            QuestionItem(
+                                question = question,
+                                onClick = { onQuestionClick(question) }
+                            )
                         }
                     }
                 }
@@ -132,7 +138,8 @@ fun HomeScreenEmptyPreview() {
         HomeScreenContent(
             uiState = SearchUiState(),
             onQueryChanged = {},
-            onSearch = {}
+            onSearch = {},
+            onQuestionClick = {}
         )
     }
 }
@@ -162,7 +169,8 @@ fun HomeScreenResultsPreview() {
                 )
             ),
             onQueryChanged = {},
-            onSearch = {}
+            onSearch = {},
+            onQuestionClick = {}
         )
     }
 }
