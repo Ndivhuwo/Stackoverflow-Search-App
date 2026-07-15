@@ -9,6 +9,7 @@ import org.junit.Before
 import org.junit.Test
 import za.co.ndivhuwo.stackoverflow_search_app.data.api.StackOverflowApi
 import za.co.ndivhuwo.stackoverflow_search_app.data.models.StackOverflowResponse
+import za.co.ndivhuwo.stackoverflow_search_app.domain.AppError
 
 class StackOverflowRepositoryImplTest {
 
@@ -46,7 +47,7 @@ class StackOverflowRepositoryImplTest {
         val result = repository.searchQuestions(query)
 
         assertTrue(result.isFailure)
-        assertEquals(exception, result.exceptionOrNull())
+        assertTrue(result.exceptionOrNull() is AppError.Unknown)
     }
 
     @Test
@@ -75,6 +76,6 @@ class StackOverflowRepositoryImplTest {
         val result = repository.getAnswers(questionId)
 
         assertTrue(result.isFailure)
-        assertEquals(exception, result.exceptionOrNull())
+        assertTrue(result.exceptionOrNull() is AppError.Unknown)
     }
 }
