@@ -12,6 +12,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import za.co.ndivhuwo.stackoverflow_search_app.data.api.StackOverflowApi
 import javax.inject.Singleton
+import java.util.concurrent.TimeUnit
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -36,6 +37,9 @@ object NetworkModule {
     fun provideOkHttpClient(loggingInterceptor: HttpLoggingInterceptor): OkHttpClient =
         OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
+            .connectTimeout(30, TimeUnit.SECONDS)
+            .readTimeout(30, TimeUnit.SECONDS)
+            .writeTimeout(30, TimeUnit.SECONDS)
             .build()
 
     @Provides

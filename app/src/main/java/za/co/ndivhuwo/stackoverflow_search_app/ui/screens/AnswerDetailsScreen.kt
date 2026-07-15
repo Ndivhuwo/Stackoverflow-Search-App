@@ -26,7 +26,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import coil.compose.AsyncImage
 import za.co.ndivhuwo.stackoverflow_search_app.R
 import za.co.ndivhuwo.stackoverflow_search_app.data.models.Answer

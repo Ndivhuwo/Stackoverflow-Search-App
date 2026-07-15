@@ -2,6 +2,7 @@ package za.co.ndivhuwo.stackoverflow_search_app.ui.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -47,7 +48,7 @@ fun QuestionItem(
                 // 1. Stats Column
                 Column(
                     modifier = Modifier.width(60.dp),
-                    horizontalAlignment = Alignment.End
+                    horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     StatItem(
                         count = question.score,
@@ -87,7 +88,7 @@ fun QuestionItem(
                     )
                 }
 
-                Spacer(modifier = Modifier.width(16.dp))
+                Spacer(modifier = Modifier.width(8.dp))
 
                 // 2. Main Content
                 Column(
@@ -114,22 +115,22 @@ fun QuestionItem(
 
                     Spacer(modifier = Modifier.height(12.dp))
 
+                    LazyRow(
+                        horizontalArrangement = Arrangement.spacedBy(4.dp),
+
+                    ) {
+                        items(question.tags) { tag ->
+                            TagChip(tag = tag)
+                        }
+                    }
+                    Spacer(modifier = Modifier.height(12.dp))
+
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        // Tags
-                        LazyRow(
-                            horizontalArrangement = Arrangement.spacedBy(4.dp),
-                            modifier = Modifier.weight(1f)
-                        ) {
-                            items(question.tags) { tag ->
-                                TagChip(tag = tag)
-                            }
-                        }
 
-                        Spacer(modifier = Modifier.width(8.dp))
 
                         // User & Date
                         Row(verticalAlignment = Alignment.CenterVertically) {
