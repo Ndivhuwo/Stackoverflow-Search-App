@@ -36,6 +36,7 @@ android {
     // Removed kotlinOptions as it's built-in in AGP 9.0+
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 
     testOptions {
@@ -85,6 +86,7 @@ dependencies {
 
     // Image Loading
     implementation(libs.coil)
+    implementation(libs.timber)
 
     // Coroutines
     implementation(libs.kotlinx.coroutines.android)
